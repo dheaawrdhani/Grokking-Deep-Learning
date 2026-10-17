@@ -62,11 +62,3 @@ GrokkingDeepLearning/
 ├── Chapter10_Convolutional-Neural-Networks.ipynb
 └── README.md
 ```
-
-## Prerequisites
-
-High-school math and basic Python (variables, lists, loops, functions). The book explains the linear algebra, calculus and machine learning it needs as it goes.
-
-## Credits and license
-
-All concepts, listings and the book's structure belong to **Andrew W. Trask** and **Manning Publications**. Please buy the book and consult it and its [official code repository](https://github.com/iamtrask/Grokking-Deep-Learning) for authoritative content and licensing. The summaries, extra plots and experiments in this repository are my own study notes.
