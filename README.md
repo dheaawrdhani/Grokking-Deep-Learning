@@ -1,26 +1,72 @@
-Grokking Deep Learning
+# Grokking Deep Learning
 
-Code reproduction and theory notes for Grokking Deep Learning by Andrew W. Trask (Manning). This repository is my submission for Task 2 (Enrichment for Deep Learning Classes): Code Reproduction + Theoretical Deep-Dive.
+Companion notebooks for **[Grokking Deep Learning](https://www.manning.com/books/grokking-deep-learning)** by Andrew W. Trask (Manning). The book builds neural networks from scratch with nothing but Python and NumPy. These notebooks follow it chapter by chapter: each one summarizes the chapter, reproduces its code, and adds plots and small experiments so every idea can be *seen* running.
 
-Every neural network here is built from scratch with plain Python and NumPy (no TensorFlow/PyTorch), following the book chapter by chapter. Each notebook mixes three things:
+> This is a personal study repository, not a replacement for the book. Read the book first; use the notebooks to check your understanding and to run the code.
 
-a summary of the chapter's theory, one section per sub-chapter of the book,
-the book's code, rebuilt and executed in Google Colab (with outputs saved), and
-extra visualisations and small experiments (network diagrams, error curves, alpha sweeps) that I added to make the ideas easier to see.
 
-Chapter summaries
-Chapter 1: Introducing Deep Learning
+## What each notebook covers
 
-A motivational chapter. It argues that deep learning is worth learning because it automates intelligence incrementally, can reshape skilled work, and is genuinely creative and fun. It also explains the book's teaching approach: only high-school math, an analogy for every formula, a "science under the frameworks" focus, and a project-first structure. Prerequisites are Python basics, Jupyter (here, Colab) and NumPy. Notebook extras: environment check, comparison table of the book's selling points, self-check questions.
+**Part 1: Foundations (no or little code in the book)**
+- **Chapter 1: Introduction.** Why deep learning is worth learning, how the book teaches it, and what you need to start. Includes an environment check cell.
+- **Chapter 2: Fundamental Concepts.** Machine learning, supervised vs. unsupervised, parametric vs. nonparametric learning. The book has no code here, so the demos are my own and are labelled *Hands-on*.
 
-Chapter 2: Fundamental Concepts
+**Part 2: Building and training your first networks**
+- **Chapter 3: Making Predictions.** Forward propagation with one and many inputs and outputs, stacked networks, the intuition behind the dot product; pure Python first, then NumPy, with diagrams drawn in Matplotlib.
+- **Chapter 4: Gradient Descent.** The *predict → compare → learn* loop: error, hot and cold learning, `weight_delta`, divergence and the role of `alpha`.
+- **Chapter 5: Learning Multiple Weights.** Gradient descent with multiple inputs and outputs, freezing a weight, and visualizing what weights learn (uses scikit-learn's 8×8 digits so it runs offline).
+- **Chapter 6: First Deep Network.** The streetlight problem, stochastic/batch/full gradient descent, correlation and overfitting, backpropagation, and why relu matters. Ends with a three-layer network built by hand.
+- **Chapter 7: Visualization.** Mental models and notation: the correlation summarization, networks as vectors and matrices, `l2 = relu(l0 W0) W1`.
 
-Places deep learning inside machine learning inside AI, then classifies every ML algorithm along two independent axes: supervised vs. unsupervised (learning a mapping between datasets vs. clustering data) and parametric vs. nonparametric (fixed number of "knobs" tuned by trial and error vs. parameters that grow with the data, typically counts). Deep learning is parametric. The chapter also lays out the three-step supervised parametric loop: predict, compare, learn. Notebook extras: a nested-circle diagram, a one-knob Monday → Tuesday learner, k-means clustering, group-membership probabilities, and a counting model whose size grows with the data.
+**Part 3: Making networks work on real data (MNIST)**
+- **Chapter 8: Regularization and Batching.** Overfitting, early stopping, dropout, mini-batch gradient descent.
+- **Chapter 9: Activation Functions.** The constraints a good activation must satisfy, sigmoid/tanh/softmax, installing an activation in the forward and backward passes, and the upgraded MNIST network.
+- **Chapter 10: Convolutional Neural Networks.** Reusing weights, what a convolution kernel does on real digits, the book's NumPy implementation trained on MNIST. Includes a note on a sign inconsistency in the book's listing.
 
-Chapter 3: Forward Propagation (Making Predictions)
+## Conventions used in the notebooks
 
-Builds the predict step in increasing complexity: one input/one weight, multiple inputs (weighted sum = dot product), multiple outputs, multiple inputs and outputs (vector–matrix multiplication), and stacked networks with a hidden layer. Along the way: vectors, matrices, elementwise operations, the dot product as a similarity measure (AND / NOT intuition), and a NumPy primer centred on shapes and the dot rule (a,b)·(b,c) → (a,c). Notebook extras: a reusable draw_net function that draws every architecture with its weights, the vector-toolkit challenge, and shape exercises.
+- **Reproduced code** follows the book's listings. Where I add something of my own (plots, extra experiments, sanity checks) it is marked as *my demo* or *Hands-on*.
+- Each notebook is meant to be run **top to bottom**; later cells reuse variables defined earlier.
+- The book's advice is to **re-type the code from memory** before moving on. The *Memorizing* / *Memorization challenge* sections are there for that purpose.
 
-Chapter 4: Introduction to Gradient Descent
 
-Builds the compare and learn steps. Error is measured with squared error (positive, emphasises large misses). Hot and cold learning finds the direction by wiggling the weight but is slow and has an arbitrary step. Gradient descent gets direction and amount from weight_delta = input * (pred - goal_pred), which also handles stopping, negative reversal and scaling. The derivative is explained as the sensitivity (slope) between weight and error; large inputs cause divergence, which alpha cures by shrinking each update. Notebook extras: the error "bowl" with its tangent, a weight-path plot, over-correction visualisation, an alpha sweep (0.001 to 0.6 and a negative alpha), and a hot-and-cold vs. gradient-descent cost comparison (about 3300 predictions vs. 22).
+### Requirements
+| Package | Used for |
+|---------|----------|
+| `numpy` | everything; the only numerical library the book uses |
+| `matplotlib` | plots and network diagrams |
+| `scikit-learn` | Chapter 5 only (bundled 8×8 digits dataset) |
+| `keras` *(optional)* | loading MNIST in Chapters 8–10 |
+
+Python 3.10+ is recommended (notebooks were last run on 3.12).
+
+### About the MNIST data (Chapters 8–10)
+The notebooks first try `keras.datasets.mnist`, as the book does. If Keras isn't installed, they fall back to downloading the same dataset from a public GitHub mirror (`mnist.pkl.gz`, saved next to the notebook), so an internet connection is the only requirement.
+
+### Expected runtime
+Chapters 1–7 run in seconds. Chapter 8 takes roughly **3–5 minutes** and Chapter 10 about **5 minutes**, because they train several networks on MNIST.
+
+## Repository structure
+
+```
+GrokkingDeepLearning/
+├── Chapter1_Introduction.ipynb
+├── Chapter2_Fundamental-Concepts.ipynb
+├── Chapter3_Making-Predictions.ipynb
+├── Chapter4_Gradient-Descent.ipynb
+├── Chapter5_Learning-Multiple-Weights.ipynb
+├── Chapter6_First-Deep-Network.ipynb
+├── Chapter7_Visualization.ipynb
+├── Chapter8_Regularization-and-Batching.ipynb
+├── Chapter9_Activation-Functions.ipynb
+├── Chapter10_Convolutional-Neural-Networks.ipynb
+└── README.md
+```
+
+## Prerequisites
+
+High-school math and basic Python (variables, lists, loops, functions). The book explains the linear algebra, calculus and machine learning it needs as it goes.
+
+## Credits and license
+
+All concepts, listings and the book's structure belong to **Andrew W. Trask** and **Manning Publications**. Please buy the book and consult it and its [official code repository](https://github.com/iamtrask/Grokking-Deep-Learning) for authoritative content and licensing. The summaries, extra plots and experiments in this repository are my own study notes.
